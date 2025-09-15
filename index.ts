@@ -1,7 +1,11 @@
 import { stepCountIs, streamText } from "ai";
 import { google } from "@ai-sdk/google";
 import { SYSTEM_PROMPT } from "./prompts";
-import { getFileChangesInDirectoryTool } from "./tools";
+import {
+  createMarkdownFileTool,
+  generateCommitMessageTool,
+  getFileChangesInDirectoryTool,
+} from "./tools";
 
 const codeReviewAgent = async (prompt: string) => {
   const result = streamText({
@@ -9,7 +13,9 @@ const codeReviewAgent = async (prompt: string) => {
     prompt,
     system: SYSTEM_PROMPT,
     tools: {
-      getFileChangesInDirectoryTool: getFileChangesInDirectoryTool,
+      getFileChangesInDirectoryTool,
+      createMarkdownFileTool,
+      generateCommitMessageTool,
     },
     stopWhen: stepCountIs(10),
   });
